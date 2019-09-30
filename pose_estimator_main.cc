@@ -324,6 +324,7 @@ int main(int argc, char **argv)
         // read byte size of measurement object from pipe
         size_t size;
         rd_in = read(fd_in, &size, sizeof(size));
+        bool read_meas = false;
 
         if (rd_in == sizeof(size)) // if successfully received size
         {
@@ -390,7 +391,7 @@ int main(int argc, char **argv)
 
                     // MEKF reset step
                     mekf.Reset();
-                    
+                    read_meas = true;
                 }
                 else // if bad measurement received, skip measurement update
                 {
@@ -430,7 +431,7 @@ int main(int argc, char **argv)
         pose0 = filtered_poses.back();
 
         //-- Write Pose to Pipe ----------------------------------------------/
-        if (output_to_pipe)
+        if (output_to_pipe && read_meas)
         {
             ProtoPose::Pose proto_pose;
             ProtoPose::Position *pos = proto_pose.mutable_pos();

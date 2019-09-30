@@ -5,6 +5,7 @@ set (CMAKE_CXX_STANDARD 11)
 include(FindProtobuf)
 find_package(Protobuf REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(Ceres REQUIRED)
 
 #add_executable(single_pose_estimator_test single_pose_estimator_test.cc Utilities.cc PoseSolver.cc)
 #target_link_libraries(single_pose_estimator_test ceres glog)
